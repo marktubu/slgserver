@@ -11,6 +11,7 @@ import (
 	"slgserver/server/chatserver/proto"
 	"slgserver/util"
 	"sync"
+	"strings"
 )
 
 var DefaultChat = Chat{
@@ -74,6 +75,13 @@ func (this*Chat) logout(req *net.WsMsgReq, rsp *net.WsMsgRsp) {
 	this.worldGroup.Exit(reqObj.RId)
 }
 
+func checkMsg(msg string) string {
+	msg = strings.Replace(msg, "猥琐", "**", -1)
+	msg = strings.Replace(msg, "傻逼", "**", -1)
+	msg = strings.Replace(msg, "草", "*", -1)
+	return msg;
+}
+
 func (this*Chat) chat(req *net.WsMsgReq, rsp *net.WsMsgRsp) {
 	reqObj := &proto.ChatReq{}
 	rspObj := &proto.ChatMsg{}
@@ -81,6 +89,7 @@ func (this*Chat) chat(req *net.WsMsgReq, rsp *net.WsMsgRsp) {
 	rsp.Body.Msg = rspObj
 
 	mapstructure.Decode(req.Body.Msg, reqObj)
+	reqObj.Msg = checkMsg(reqObj.Msg)
 
 	p, _ := req.Conn.GetProperty("rid")
 	rid := p.(int)
