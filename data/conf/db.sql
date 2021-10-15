@@ -229,5 +229,33 @@ CREATE TABLE IF NOT EXISTS `tb_skill_1` (
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '技能表';
 
+CREATE TABLE IF NOT EXISTS `tb_friend_1` (
+   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `name` varchar(20) NOT NULL COMMENT '联盟名字',
+   `members` varchar(2048) NOT NULL COMMENT '成员',
+   `create_id` int unsigned NOT NULL COMMENT '创建者id',
+   `chairman` int unsigned NOT NULL COMMENT '盟主',
+   `vice_chairman` int unsigned NOT NULL COMMENT '副盟主',
+   `notice` varchar(256) COMMENT '公告',
+   `state` tinyint unsigned NOT NULL DEFAULT '1' COMMENT '0解散，1运行中',
+   `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`name`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '好友';
 
+CREATE TABLE IF NOT EXISTS `tb_friend_apply_1` (
+   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `union_id` int unsigned NOT NULL COMMENT '联盟id',
+   `rid` int unsigned NOT NULL COMMENT '申请者的rid',
+   `state` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '申请状态，0未处理，1拒绝，2通过',
+   `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '好友申请表';
+
+CREATE TABLE IF NOT EXISTS `tb_friend_log_1` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `desc` varchar(256) NOT NULL COMMENT '描述',
+    `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '发生时间',
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '好友日志表';
 
