@@ -15,7 +15,7 @@ type FriendListReq struct {
 }
 
 type FriendListRsp struct {
-	Friends []Friend `json:"friends"`
+	List []Friend `json:"list"`
 }
 
 type FriendAddReq struct {
